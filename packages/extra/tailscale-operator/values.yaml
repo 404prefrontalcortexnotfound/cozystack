@@ -1,0 +1,39 @@
+##
+## @section Tailscale Operator Configuration
+##
+
+## @param oauth.clientId - OAuth client ID from Tailscale admin console
+## @param oauth.clientSecret - OAuth client secret from Tailscale admin console
+oauth:
+  clientId: ""
+  clientSecret: ""
+
+## @param operatorConfig.hostname - Hostname for the operator in tailnet
+operatorConfig:
+  hostname: "k8s-operator"
+
+## @param connector.enabled - Enable subnet router connector
+## @param connector.hostname - Hostname for the connector in tailnet
+## @param connector.routes - Subnet routes to advertise
+connector:
+  enabled: true
+  hostname: "hetzner-cluster-router"
+  routes:
+    - "10.244.0.0/16"  # Pod CIDR
+    - "10.96.0.0/16"   # Service CIDR
+    - "10.0.0.0/16"    # vSwitch internal network
+
+## @param proxyGroup.enabled - Enable ProxyGroup for HA egress
+## @param proxyGroup.replicas - Number of proxy replicas
+proxyGroup:
+  enabled: false
+  replicas: 2
+
+## @param resources - Resource limits for operator pod
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi

@@ -1,0 +1,14 @@
+{{- if .Values.connector.enabled }}
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: {{ .Values.connector.hostname }}
+spec:
+  hostname: {{ .Values.connector.hostname }}
+  subnetRouter:
+    advertiseRoutes:
+      {{- toYaml .Values.connector.routes | nindent 6 }}
+  tags:
+    - tag:k8s-operator
+    - tag:hetzner-cluster
+{{- end }}

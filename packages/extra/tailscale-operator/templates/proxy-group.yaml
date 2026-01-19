@@ -1,0 +1,9 @@
+{{- if .Values.proxyGroup.enabled }}
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyGroup
+metadata:
+  name: ts-proxies
+spec:
+  type: egress
+  replicas: {{ .Values.proxyGroup.replicas }}
+{{- end }}
