@@ -1,0 +1,15 @@
+apiVersion: v2
+name: arr-stack
+description: "Arr Stack Deployment (Sonarr, Radarr, Prowlarr) for CozyStack"
+version: 0.1.0
+type: application
+dependencies:
+  - name: sonarr
+    version: "6.x.x"
+    repository: "https://onedr0p.github.io/export-charts"
+  - name: radarr
+    version: "6.x.x"
+    repository: "https://onedr0p.github.io/export-charts"
+  - name: prowlarr
+    version: "4.x.x"
+    repository: "https://onedr0p.github.io/export-charts"

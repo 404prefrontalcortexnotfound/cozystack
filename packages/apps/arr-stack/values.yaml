@@ -1,0 +1,66 @@
+global:
+  # Shared configuration if underlying charts support it
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        # Auto-managed TLS via Cozystack (cert-manager default issuer likely)
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      className: "nginx" # or cozystack defaults
+
+# specific app configuration
+sonarr:
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: sonarr.cozy.local # Change to real domain
+          paths:
+            - path: /
+              pathType: Prefix
+  persistence:
+    config:
+      enabled: true
+      storageClass: "linstor-r1" # Replicated Linstor
+      size: 1Gi
+    media:
+      enabled: true
+      existingClaim: "media-pvc" # Shared media volume
+      mountPath: /media
+
+radarr:
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: radarr.cozy.local
+          paths:
+            - path: /
+              pathType: Prefix
+  persistence:
+    config:
+      enabled: true
+      storageClass: "linstor-r1"
+      size: 1Gi
+    media:
+      enabled: true
+      existingClaim: "media-pvc"
+      mountPath: /media
+
+prowlarr:
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: prowlarr.cozy.local
+          paths:
+            - path: /
+              pathType: Prefix
+  persistence:
+    config:
+      enabled: true
+      storageClass: "linstor-r1"
+      size: 1Gi
+
+# Note: You should create the Shared Media PVC separately or define a common PVC here if charts allow.
+# For SeaweedFS (Shared), you would use storageClass: seaweedfs-sc
